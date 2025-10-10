@@ -18,7 +18,7 @@ export class ListaProductos {
       descripcion: "Las Nike Air Force 1 son un clásico atemporal, combinan estilo urbano con gran comodidad gracias a su amortiguación de aire en la suela y su diseño resistente.",
       clasificacion: "Deportivo / Casual",
       precio: 32000,
-      rutaImagen: "assets/imagenes/nike_air_force_1.jpg"
+      rutaImagen: "img/nike_air_force_1.webp"
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ export class ListaProductos {
       descripcion: "Las Adidas Ultraboost ofrecen una experiencia de carrera superior, con máxima amortiguación y retorno de energía.",
       clasificacion: "Running / Deportivo",
       precio: 45000,
-      rutaImagen: "assets/imagenes/adidas_ultraboost.jpg"
+      rutaImagen: "img/adidas_ultraboost.jpg"
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ export class ListaProductos {
       descripcion: "Las Puma RS-X combinan diseño retro con tecnología moderna, ofreciendo una pisada cómoda y estable.",
       clasificacion: "Casual / Deportivo",
       precio: 28000,
-      rutaImagen: "assets/imagenes/puma_rsx.jpg"
+      rutaImagen: "img/puma_rsx.avif"
     }
   ];
 
