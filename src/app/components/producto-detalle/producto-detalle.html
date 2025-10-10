@@ -1,0 +1,22 @@
+<!-- producto-detalle.html -->
+<div class="detalle-container" *ngIf="producto; else noEncontrado">
+  <h2>{{ producto.nombre }}</h2>
+  <img [src]="producto.rutaImagen" [alt]="producto.rutaImagen" class="detalle-img" />
+
+  <p class="descripcion">{{ producto.descripcion }}</p>
+  <p class="clasificacion">Categoría: {{ producto.clasificacion}}</p>
+  <p class="precio">Precio: ${{ producto.precio }}</p>
+
+  <div class="acciones">
+    <button (click)="agregarAlCarrito()"> Agregar al carrito</button>
+    <button class="comprar" (click)="comprarAhora()"> Comprar ahora</button>
+  </div>
+</div>
+
+<ng-template #noEncontrado>
+  <div class="producto-no-encontrado">
+    <h2>Producto no encontrado</h2>
+    <p>El producto que buscas no existe o ha sido removido.</p>
+    <a routerLink="/home">← Volver al catálogo</a>
+  </div>
+</ng-template>

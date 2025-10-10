@@ -1,0 +1,57 @@
+
+.detalle-container {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+p{
+  padding: 20px;
+}
+
+.detalle-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.descripcion {
+  font-size: 16px;
+  color: #555;
+}
+
+.precio {
+  font-weight: bold;
+  margin: 10px 0;
+  color: #222;
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.comprar {
+  background-color: #007bff;
+  color: white;
+}
