@@ -1,9 +1,11 @@
-<p>lista-productos works!</p>
-
-<div> 
-    @for(producto of productos; track producto.id){
-    <p>{{producto.id}}{{producto.nombre}}</p>
-}
-   
-<!--<p>{{producto[0].id}}</p>-->
+<div class="grid-productos">
+  <a class="tarjeta-producto" *ngFor="let producto of productos; trackBy: trackById"
+   [routerLink]="['/producto', producto.id]">
+  <img [src]="producto.rutaImagen" [alt]="producto.nombre" class="imagen-producto">
+  <div class="contenido-producto">
+    <h3>{{ producto.nombre }}</h3>
+    <p><strong>Clasificación:</strong> {{ producto.clasificacion }}</p>
+    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+  </div>
+</a>
 </div>
