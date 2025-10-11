@@ -11,10 +11,12 @@
   overflow: hidden;
   transition: all 0.6s;
   background-color: #fff;
+  text-decoration: none;
+  color: black;
 }
 
 .tarjeta-producto:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
 }
