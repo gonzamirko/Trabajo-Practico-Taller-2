@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RecoverPassword } from '../recover-password/recover-password';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterModule,RecoverPassword],
+  imports: [RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
