@@ -1,8 +1,8 @@
 // producto-detalle.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IProducto } from '../lista-productos/i-producto';
-import { ListaProductos } from '../lista-productos/lista-productos';
+import { IProducto } from '../../services/servicio-producto/i-producto';
+import { ServicioProducto } from '../../services/servicio-producto/servicio-producto';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductoDetalle implements OnInit {
   producto: IProducto | undefined;
-  productos: IProducto[] = new ListaProductos().productos;
+  servicioProducto = new ServicioProducto();
+  productos: IProducto[] = this.servicioProducto.getProductos();
 
   constructor(private route: ActivatedRoute) { }
 
