@@ -3,14 +3,14 @@
   <form>
     <div class="ingreso">
     <label for="email">Email</label>
-    <input id="email" type="email" placeholder="Tu email">
+    <input id="email" type="email" name = "email" [(ngModel)] = "email" placeholder="Tu email">
     </div>
     <div class="ingreso">
     <label for="password">Contraseña</label>
-    <input id="password" type="password" placeholder="Tu contraseña">
+    <input id="password" type="password" name = "password" [(ngModel)] = "password" placeholder="Tu contraseña">
     </div>
     <div class="opciones">
-    <button type="submit">Ingresar</button>
+    <a (click) = "ingresarAHome()"><button type="submit">Ingresar</button></a>
     <a class="recu" routerLink="/recoverPassword">Olvidaste tu contraseña?</a>
     </div>
   </form>
