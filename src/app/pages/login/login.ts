@@ -22,6 +22,7 @@ ingresarAHome(){
 
   if(usuarioEncontrado){
     localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado));
+    //window.location.reload();
     this.router.navigate(['/home']);
   }else{
     alert('Usuario o contraseña incorrecta');

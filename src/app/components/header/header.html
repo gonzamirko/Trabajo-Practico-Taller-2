@@ -1,7 +1,15 @@
 <header>
     <a routerLink="/welcomePage">Logito</a>
     <nav>
+        <ng-container *ngIf="nombreUsuario; else noLogueado">
+            <span> Hola, {{nombreUsuario}}</span>
+            <button (click)="cerrarSesion()">Cerrar Sesión</button>
+        </ng-container>
+
+        <ng-template #noLogueado>
             <a routerLink="/login">Iniciar sesión</a>
             <a routerLink="/register">Registrarse</a>
+        </ng-template>
+            
     </nav>
 </header>
