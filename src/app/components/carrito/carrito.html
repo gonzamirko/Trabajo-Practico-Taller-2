@@ -1,0 +1,34 @@
+<div class="contenedor-principal">
+  <div class="contenedor-productos">
+    @if (productosCarrito.length === 0) {
+      <div class="carrito-vacio">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <h2>Tu carrito está vacío</h2>
+        <a routerLink="/home" class="boton-volver">Explorar productos</a>
+      </div>
+    } @else {
+      @for (producto of productosCarrito; track producto.id) {
+        <div class="tarjeta-producto">
+          <img [src]="producto.rutaImagen" [alt]="producto.nombre" class="imagen-producto">
+          <div class="contenido-producto">
+            <div class="info-producto">
+              <a [routerLink]="['/producto', producto.id]">{{ producto.nombre }}</a>
+              <p class="precio"><strong>${{ producto.precio }}</strong></p>
+              <p><strong>Clasificación:</strong> {{ producto.clasificacion }}</p>
+            </div>
+            <div class="acciones">
+              <i class="fa-solid fa-trash fa-lg" (click)="eliminar(producto); $event.stopPropagation()"></i>
+            </div>
+          </div>
+        </div>
+      }
+          <a class="mas" routerLink="/home">Explorar más productos</a>
+    }
+  </div>
+
+  <div class="contenedor-informacion" *ngIf="productosCarrito.length > 0">
+    <p><strong>Cantidad de productos: </strong>{{ productosCarrito.length }}</p>
+    <p>Aca va la información adicional del carrito!!</p>
+    <p>Faltaria agregar subtotal, envío, medios de pago, etc</p>
+  </div>
+</div>

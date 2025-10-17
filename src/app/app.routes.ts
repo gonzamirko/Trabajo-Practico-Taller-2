@@ -5,6 +5,7 @@ import { Register } from './pages/register/register';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { ProductoDetalle} from './components/producto-detalle/producto-detalle';
 import { RecoverPassword } from './pages/recover-password/recover-password';
+import { Carrito } from './components/carrito/carrito';
 
 export const routes: Routes = [
     {path:'' , component:WelcomePage},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path:'register', component:Register},
     {path: 'producto/:id', component: ProductoDetalle},
     {path:'recoverPassword',component:RecoverPassword},
+    {path:'carrito',component:Carrito},
     {path:'**',redirectTo: ''}
 ];

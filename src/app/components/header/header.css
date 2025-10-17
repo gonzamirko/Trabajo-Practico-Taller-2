@@ -22,7 +22,7 @@ nav a {
     background-color: #4E31AA;
     text-decoration: none;
     transition: all 0.5s ease;
-    box-shadow: 0 4px 10px rgba(78, 49, 170, 0.3);
+    box-shadow: 0 4px 10px #4e31aa4d;
     padding: 0.8rem 1rem;
     border-radius: 6px;
     font-size: 1rem;

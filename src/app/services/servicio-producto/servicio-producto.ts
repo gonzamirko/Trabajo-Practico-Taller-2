@@ -40,6 +40,10 @@ export class ServicioProducto {
       return this.productos;
     }
     
+    getProductoPorId(id: number): IProducto | undefined {
+      return this.productos.find(p => p.id === id);
+    }
+    
     trackById(index: number, producto: IProducto) {
     return producto.id;
   }
