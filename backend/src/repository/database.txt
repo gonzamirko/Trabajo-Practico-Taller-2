@@ -1,0 +1,8 @@
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    contrasenia VARCHAR(100) NOT NULL,
+    direccion VARCHAR(200)
+);
