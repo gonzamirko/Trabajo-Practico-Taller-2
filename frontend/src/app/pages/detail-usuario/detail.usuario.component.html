@@ -1,12 +1,17 @@
-<h1>Datos del usuario</h1>
+<div class="container">
+  <div class="card">
+    <h1>Datos del usuario</h1>
 
-<div *ngIf="usuario; else cargando">
-  <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
-  <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
-  <p><strong>Email:</strong> {{ usuario.email }}</p>
-  <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+    <div *ngIf="usuario; else cargando" class="datos">
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+    </div>
+
+    <ng-template #cargando>
+      <p>Cargando usuario...</p>  
+    </ng-template>
+  </div>
 </div>
 
-<ng-template #cargando>
-  <p>Cargando usuario...</p>  
-</ng-template>
