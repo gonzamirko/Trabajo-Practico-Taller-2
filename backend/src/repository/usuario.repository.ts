@@ -8,4 +8,10 @@ export class UsuarioRepository {
         })
     }
     
+    async findUsuarioById(id:number){
+        return await prisma.usuario.findUnique(
+        {
+           where : {id_usuario:id}
+        })
+    }
 }

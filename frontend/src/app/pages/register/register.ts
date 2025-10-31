@@ -14,6 +14,7 @@ export class Register {
 
   constructor(private router : Router){}
 
+  
   nombre: string = '';
   apellido: string = '';
   email: string = '';

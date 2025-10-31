@@ -5,6 +5,7 @@ import { Footer } from './components/footer/footer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListaProductos } from './components/lista-productos/lista-productos';
 
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,Header,Footer],

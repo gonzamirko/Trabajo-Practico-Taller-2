@@ -5,4 +5,6 @@ const usuarioRouter = Router();
 
 const usuarioController = new UsuarioController();
 
-usuarioRouter.post('/',usuarioController.crearUsuario.bind(usuarioController));
+usuarioRouter.get('/usuario/:id',usuarioController.getUsuario.bind(usuarioController));
+
+export { usuarioRouter };

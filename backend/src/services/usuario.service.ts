@@ -8,5 +8,8 @@ export class UsuarioSevice {
         return await this.usuarioRepository.findUsuarioByEmail(email);
     }
 
+    async obtenerUsuarioPorId(id:number){
+        return await this.usuarioRepository.findUsuarioById(id);
+    }
     
 }

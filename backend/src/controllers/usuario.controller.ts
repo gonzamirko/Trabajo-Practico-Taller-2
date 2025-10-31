@@ -9,12 +9,18 @@ export class UsuarioController {
    
     constructor() {}
 
-    public crearUsuario = async(req:Request,res:Response)=>{
+    public getUsuario = async(req:Request,res:Response)=>{
         try {
-            const email = req.params.email;
+            const id = Number(req.params.id);
 
-            const usuario = await usuarioService.obtenerUsuarioPorEmail(email);
-            if (!usuario) {
+            if (isNaN(id)) {
+                return res.status(400).json("id invalido");
+            }
+
+            const usuario = await usuarioService.obtenerUsuarioPorId(id);
+            console.log(usuario);
+            
+            if (usuario == null) {
                 return res.status(404).json("usuario no encontrado");
             }
 
