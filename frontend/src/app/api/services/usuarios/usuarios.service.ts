@@ -16,4 +16,7 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${environment.api_url}/usuario/${id_usuario}`);
   }
 
+  login(body: { email: string; password: string }): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}/login`, body);
+  }
 }

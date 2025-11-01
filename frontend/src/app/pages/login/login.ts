@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Component ,inject,OnDestroy,OnInit} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
+import { UsuariosService } from '../../api/services/usuarios/usuarios.service';
+import { Usuario } from '../../components/usuario/usuario';
+import { ActivatedRoute,RouterLinkActive,RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,26 +13,55 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+
+
+export class Login implements OnDestroy,OnInit{
+
+  activatedRouter = inject(ActivatedRoute);
+  usuario !: Usuario;
 
   email: string = '';
   password: string = '';
 
-  constructor(private router : Router){}
-  
-ingresarAHome(){
-  const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios') || '[]');
-  const usuarioEncontrado = usuariosGuardados.find((u: any) => 
-    u.email === this.email && u.password === this.password);
-
-  if(usuarioEncontrado){
-    localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado));
-    //window.location.reload();
-    this.router.navigate(['/home']);
-  }else{
-    alert('Usuario o contraseña incorrecta');
+  constructor(private usuariosService: UsuariosService,private cdr: ChangeDetectorRef,private router:Router) {
   }
   
-}
+
+
+
+
+  ngOnInit(): void {
+ }
+
+  ngOnDestroy(): void {
+    
+  }
+
+  login(){
+    
+    const body ={
+      email:this.email, 
+      password:this.password};
+
+    this.usuariosService.login(body).subscribe({
+
+      next :(res:any) =>{
+        alert(res.message);
+        this.router.navigate(['/home'])
+      },
+
+        error: (err) => {
+        console.error('Error al obtener usuario:', err);
+      },
+
+        complete:()=>{
+        
+      }
+
+
+    })
+
+  }
+
 
 }
