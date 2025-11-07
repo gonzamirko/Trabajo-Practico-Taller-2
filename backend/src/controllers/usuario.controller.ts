@@ -54,5 +54,15 @@ export class UsuarioController {
           res.status(500).json({ message: "Error interno en el servidor", error });
         }
       };
+
+      public register = async (req: Request, res: Response) => {
+          try {
+             const registroTomado = req.body;
+             const usuario = await usuarioService.registrarUsuario(registroTomado);
+             res.status(201).json({message: 'Usuario registrado correctamente'});
+          } catch (error) {
+            res.status(500).json({message: 'No se pudo registrar el usuario', error});
+          }
+      }
       
 }
