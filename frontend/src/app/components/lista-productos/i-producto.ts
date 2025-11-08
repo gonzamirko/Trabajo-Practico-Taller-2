@@ -4,5 +4,9 @@ export interface IProducto {
   descripcion: string;
   clasificacion: string;
   precio: number;
-  rutaImagen: string; 
+  rutaImagen: string;
+  stock: number;
+  color: string;
+  talle: number;
 }
+

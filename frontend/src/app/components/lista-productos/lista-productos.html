@@ -1,5 +1,5 @@
 <div class="grid-productos">
-  <a class="tarjeta-producto" *ngFor="let producto of productos; trackBy: trackById"
+  <a class="tarjeta-producto" *ngFor="let producto of productos"
    [routerLink]="['/producto', producto.id]">
   <img [src]="producto.rutaImagen" [alt]="producto.nombre" class="imagen-producto">
   <div class="contenido-producto">
