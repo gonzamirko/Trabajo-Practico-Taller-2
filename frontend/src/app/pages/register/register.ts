@@ -1,48 +1,67 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Usuario } from '../../components/usuario/usuario';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UsuariosService } from '../../api/services/usuarios/usuarios.service';
+import { Usuario } from '../../components/usuario/usuario';
+import { CommonModule } from '@angular/common';
 
  
 @Component({
   selector: 'app-register',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
-export class Register {
+export class Register implements OnInit, OnDestroy {
+  private formBuilder = inject(FormBuilder);
+  usuarioService = inject(UsuariosService);
 
-  constructor(private router : Router){}
+  form!: FormGroup;
+  router = inject(Router)
 
-  
-  nombre: string = '';
-  apellido: string = '';
-  email: string = '';
-  password: string = '';
-  direccion: string = '';
+  errorMessage: string = "";
 
-  usuario = new Usuario();
-  usuariosGuardados = JSON.parse(localStorage.getItem('usuarios') || '[]');
-
-  registrarCliente(){
-
-    const yaExiste = this.usuariosGuardados.some((u: Usuario) => u.email === this.email);
-
-    if(yaExiste){
-      alert('Usuario existente')
-    }else{
-      
-    this.usuario.nombre = this.nombre;
-    this.usuario.apellido = this.apellido;
-    this.usuario.email = this.email;
-    this.usuario.password = this.password;
-    this.usuario.direccion = this.direccion;
-    this.usuariosGuardados.push(this.usuario);
-
-    localStorage.setItem('usuarios', JSON.stringify(this.usuariosGuardados));
-    this.router.navigate(['/login']);
-    }
+  ngOnInit(): void {
+    this.form = this.formBuilder.group(
+     {
+       nombre: ["",[Validators.required]],
+       apellido: ["",[]],
+       email: ["",[Validators.required, Validators.email]],
+       contrasenia: ["",[Validators.required]],
+       direccion: ["",[Validators.required]]
+     }
+    )
   }
 
+  ngOnDestroy(): void {
 
+  }
+
+  registrarUsuario(){
+     const usuario: Usuario = {
+           nombre: this.form.get("nombre")?.value,
+           apellido: this.form.get("apellido")?.value,
+           email: this.form.get("email")?.value,
+           contrasenia: this.form.get("contrasenia")?.value,
+           direccion: this.form.get("direccion")?.value 
+           } 
+    
+      this.usuarioService.register(usuario).subscribe({
+          next: (res: any) => {
+            this.errorMessage = '';
+            alert(res.message);
+            this.router.navigate(['/login']);
+          },
+
+          error: (error) => {
+            if(this.form.invalid){
+               this.form.markAllAsTouched();
+               this.errorMessage = error?.error.message; 
+            }
+          },
+
+          complete: () => {},
+         
+      });      
+  }
 }

@@ -19,4 +19,10 @@ export class UsuariosService {
   login(body: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${environment.api_url}/login`, body);
   }
+
+  register(usuario: Usuario){
+    return this.http.post<any>(`${environment.api_url}/register`,usuario);
+  }
+
+  
 }
