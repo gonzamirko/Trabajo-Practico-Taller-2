@@ -1,33 +1,57 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UsuarioService } from '../../api/services/usuarios/usuarios.service';
+import { Usuario } from '../../components/usuario/usuario';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  providers: [UsuarioService],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit, OnDestroy {
+  activatedRouter = inject(ActivatedRoute);
+  usuario!: Usuario;
 
   email: string = '';
-  password: string = '';
+  contrasenia: string = '';
+  loading = false;
 
-  constructor(private router : Router){}
-  
-ingresarAHome(){
-  const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios') || '[]');
-  const usuarioEncontrado = usuariosGuardados.find((u: any) => 
-    u.email === this.email && u.password === this.password);
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router
+  ) {}
 
-  if(usuarioEncontrado){
-    localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado));
-    //window.location.reload();
-    this.router.navigate(['/home']);
-  }else{
-    alert('Usuario o contraseña incorrecta');
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
+
+  login() {
+    if (this.loading) return;
+    this.loading = true;
+
+    const body = {
+      email: this.email,
+      contrasenia: this.contrasenia
+    };
+
+    this.usuarioService.login(body).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        alert('Inicio de sesión exitoso ✅');
+        // Guardar datos en localStorage si querés
+        localStorage.setItem('usuario', JSON.stringify(res.usuario));
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.loading = false;
+        alert(err.error?.error || 'Email o contraseña incorrectos');
+        console.error('Error al iniciar sesión:', err);
+      }
+    });
   }
-  
-}
-
 }

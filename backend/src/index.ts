@@ -12,8 +12,11 @@ app.use(cors({
     origin: 'http://localhost:4200'
   }));
 
+
+app.use(express.json());
+
 app.use(AppRoutes.routes);
 
 app.listen(PORT,()=>{
-    console.log("Servidor Corriendo");
+    console.log(`Servidor Corriendo en el servidor: http://localhost:${PORT}`);
 })

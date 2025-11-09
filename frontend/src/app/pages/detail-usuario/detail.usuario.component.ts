@@ -1,7 +1,6 @@
 import { Component ,inject,OnDestroy,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsuariosService } from '../../api/services/usuarios/usuarios.service';
-import { Usuario } from '../../components/usuario/usuario';
+import { UsuarioService,Usuario } from '../../api/services/usuarios/usuarios.service';
 import { ActivatedRoute,RouterLinkActive,RouterLink } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -19,10 +18,10 @@ import { ChangeDetectorRef } from '@angular/core';
 
 export class DetailUsuarioComponent implements OnDestroy,OnInit {
 
-    constructor(private usuariosService: UsuariosService,private cdr: ChangeDetectorRef) {}
+    constructor(private UsuarioService: UsuarioService,private cdr: ChangeDetectorRef) {}
 
     id!:number;
-    usuarioServicio = inject(UsuariosService);
+    usuarioServicio = inject(UsuarioService);
 
     activatedRouter = inject(ActivatedRoute);
     usuario !: Usuario;
@@ -34,14 +33,14 @@ export class DetailUsuarioComponent implements OnDestroy,OnInit {
     }
 
     ngOnDestroy(): void {
-        
+
     }
 
     getUsuario(){
         this.usuarioServicio.getUsuario(this.id).subscribe({
             next :(usuario:Usuario) =>{
                 this.usuario= usuario;
-                // refresca cambios sin el no muetsra nada 
+                // refresca cambios sin el no muetsra nada
                 this.cdr.detectChanges();
             },
 
@@ -49,10 +48,10 @@ export class DetailUsuarioComponent implements OnDestroy,OnInit {
                 console.error('Error al obtener usuario:', err);
               },
             complete:()=>{
-                
+
             }
         })
 
     }
-   
+
 }

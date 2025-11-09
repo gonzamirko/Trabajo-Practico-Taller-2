@@ -1,34 +1,50 @@
-// producto-detalle.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IProducto } from '../lista-productos/i-producto';
-import { ListaProductos } from '../lista-productos/lista-productos';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { IProducto } from '../lista-productos/i-producto';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ProductoServicio } from '../../api/services/productos/producto.service';
 
 @Component({
-  selector: 'app-producto-detalle',
-  templateUrl: './producto-detalle.html',
-  styleUrls: ['./producto-detalle.css'],
-  imports: [CommonModule]
+  selector: 'app-producto-detalle',
+  standalone: true,
+  templateUrl: './producto-detalle.html',
+  styleUrls: ['./producto-detalle.css'],
+  imports: [CommonModule]
 })
+
 export class ProductoDetalle implements OnInit {
-  producto: IProducto | undefined;
-  productos: IProducto[] = new ListaProductos().productos;
+  producto$: Observable<IProducto | undefined>;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productoServicio: ProductoServicio
+  ) {
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = Number(params['id']);
-      this.producto = this.productos.find(p => p.id === id);
-    });
+    this.producto$ = new Observable<IProducto | undefined>();
   }
 
-  agregarAlCarrito() {
+  ngOnInit(): void {
 
-  }
+    this.producto$ = this.route.paramMap.pipe(
 
-  comprarAhora() {
-    
-  }
+        switchMap(map => {
+            const id = Number(map.get('id'));
+         
+            return this.productoServicio.verProductoPorId(id);
+        })
+    );
+
+  }
+
+  agregarAlCarrito(){
+   
+  }
+
+  comprarAhora() {
+   
+  }
 }

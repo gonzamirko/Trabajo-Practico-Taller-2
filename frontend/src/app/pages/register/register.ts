@@ -1,48 +1,54 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Usuario } from '../../components/usuario/usuario';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { UsuarioService } from '../../api/services/usuarios/usuarios.service';
 
- 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, HttpClientModule],
+  providers: [UsuarioService],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
 export class Register {
+  nombre = '';
+  apellido = '';
+  email = '';
+  contrasenia = '';
+  direccion = '';
+  loading = false;
 
-  constructor(private router : Router){}
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router
+  ) {}
 
-  
-  nombre: string = '';
-  apellido: string = '';
-  email: string = '';
-  password: string = '';
-  direccion: string = '';
+  registrarCliente() {
+    if (this.loading) return;
 
-  usuario = new Usuario();
-  usuariosGuardados = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    this.loading = true;
 
-  registrarCliente(){
+    const nuevoUsuario = {
+      nombre: this.nombre,
+      apellido: this.apellido,
+      email: this.email,
+      contrasenia: this.contrasenia,
+      direccion: this.direccion
+    };
 
-    const yaExiste = this.usuariosGuardados.some((u: Usuario) => u.email === this.email);
-
-    if(yaExiste){
-      alert('Usuario existente')
-    }else{
-      
-    this.usuario.nombre = this.nombre;
-    this.usuario.apellido = this.apellido;
-    this.usuario.email = this.email;
-    this.usuario.password = this.password;
-    this.usuario.direccion = this.direccion;
-    this.usuariosGuardados.push(this.usuario);
-
-    localStorage.setItem('usuarios', JSON.stringify(this.usuariosGuardados));
-    this.router.navigate(['/login']);
-    }
+    this.usuarioService.register(nuevoUsuario).subscribe({
+      next: (res) => {
+        this.loading = false;
+        alert('Usuario registrado con éxito');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.loading = false;
+        alert(err.error?.error || 'Error al registrar el usuario');
+      }
+    });
   }
-
-
 }
