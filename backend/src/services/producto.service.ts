@@ -14,4 +14,9 @@ export class ProductoService {
     async obtenerProductoPorId(id:number){
         return await this.productoRepository.findProductoById(id);  
     }
+
+    async filtrarProductos(filtros: any): Promise<Producto[]> {
+  return await this.productoRepository.filtrar(filtros);
+}
+
 }

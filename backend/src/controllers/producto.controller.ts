@@ -9,14 +9,44 @@ const productoService = new ProductoService(productoRepository);
 export class ProductoController {
 
 
-     public getProductos = async(req:Request,res:Response)=>{
+    /* public getProductos = async(req:Request,res:Response)=>{
         try {
             const productos = await productoService.obtenerTodosLosProductos();
             res.status(200).json(productos);
         } catch (error) {
             res.status(500).json({message:"error",error})
         }   
+    }*/
+
+        public getProductos = async (req: Request, res: Response) => {
+  try {
+    const { nombre, clasificacion, precioMin, precioMax } = req.query;
+
+    const filtros: any = {};
+
+    if (nombre) {
+      filtros.nombre = { contains: String(nombre), mode: "insensitive" };
     }
+
+    if (clasificacion) {
+      filtros.clasificacion = String(clasificacion);
+    }
+
+    if (precioMin || precioMax) {
+      filtros.precio = {};
+
+      if (precioMin) filtros.precio.gte = Number(precioMin);
+      if (precioMax) filtros.precio.lte = Number(precioMax);
+    }
+
+    const productos = await productoService.filtrarProductos(filtros);
+    res.status(200).json(productos);
+
+  } catch (error) {
+    res.status(500).json({ message: "error", error });
+  }
+};
+
 
     public getProductoById = async (req: Request, res: Response) => {
         try {

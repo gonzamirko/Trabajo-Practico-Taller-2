@@ -14,4 +14,11 @@ export class ProductoRepository {
         });
     }
 
+    async filtrar(filtros: any): Promise<Producto[]> {
+  return await prisma.producto.findMany({
+    where: filtros
+  });
+}
+
+
 }
