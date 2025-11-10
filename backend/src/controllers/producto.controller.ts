@@ -25,11 +25,12 @@ export class ProductoController {
     const filtros: any = {};
 
     if (nombre) {
-      filtros.nombre = { contains: String(nombre), mode: "insensitive" };
+     // filtros.nombre = { contains: String(nombre), mode: "insensitive" };
+      filtros.nombre = { contains: String(nombre).toLowerCase() };
     }
 
     if (clasificacion) {
-      filtros.clasificacion = String(clasificacion);
+      filtros.clasificacion = { contains: String(clasificacion).toLowerCase() };
     }
 
     if (precioMin || precioMax) {
