@@ -10,7 +10,7 @@
 </a>
 </div>-->
 
-<input type="text" placeholder="Buscar por nombre" [(ngModel)]="nombre">
+<!--<input type="text" placeholder="Buscar por nombre" [(ngModel)]="nombre">
 
 <select [(ngModel)]="clasificacion">
   <option value="">Todas</option>
@@ -26,5 +26,34 @@
 
 <div *ngFor="let producto of productos$ | async">
   <p>{{producto.nombre}} - {{producto.precio}}</p>
+</div>-->
+
+<input type="text" placeholder="Buscar por nombre" [(ngModel)]="nombre">
+
+<select [(ngModel)]="clasificacion">
+  <option value="">Todas</option>
+  <option value="Running">Running</option>
+  <option value="Deportivo">Deportivo</option>
+  <option value="Casual">Casual</option>
+</select>
+
+<input type="number" placeholder="Precio mínimo" [(ngModel)]="precioMin">
+<input type="number" placeholder="Precio máximo" [(ngModel)]="precioMax">
+
+<button (click)="filtrar()">Filtrar</button>
+
+<div class="grid-productos">
+  <a class="tarjeta-producto" *ngFor="let producto of productos$ | async"
+     [routerLink]="['/producto', producto.id]">
+     
+    <img [src]="producto.rutaImagen" [alt]="producto.nombre" class="imagen-producto">
+  
+    <div class="contenido-producto">
+      <h3>{{ producto.nombre }}</h3>
+      <p><strong>Clasificación:</strong> {{ producto.clasificacion }}</p>
+      <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+    </div>
+  </a>
 </div>
+
 
