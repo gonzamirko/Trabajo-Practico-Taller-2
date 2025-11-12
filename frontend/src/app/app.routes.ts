@@ -6,6 +6,7 @@ import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { ProductoDetalle} from './components/producto-detalle/producto-detalle';
 import { RecoverPassword } from './pages/recover-password/recover-password';
 import { DetailUsuarioComponent } from './pages/detail-usuario/detail.usuario.component';
+import { Logout } from './pages/logout/logout';
 
 export const routes: Routes = [
     {path:'' , component:WelcomePage},
@@ -15,5 +16,6 @@ export const routes: Routes = [
     {path: 'producto/:id', component: ProductoDetalle},
     {path:'recoverPassword',component:RecoverPassword},
     {path: 'usuario/:id', component: DetailUsuarioComponent},
-    {path:'**',redirectTo: ''}
+    {path:'**',redirectTo: ''},
+    { path: 'logout', component: Logout }
 ];
