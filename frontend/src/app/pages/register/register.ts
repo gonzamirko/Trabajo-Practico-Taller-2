@@ -5,7 +5,6 @@ import { UsuariosService } from '../../api/services/usuarios/usuarios.service';
 import { Usuario } from '../../components/usuario/usuario';
 import { CommonModule } from '@angular/common';
 
- 
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, FormsModule, CommonModule],

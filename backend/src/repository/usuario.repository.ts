@@ -1,4 +1,5 @@
 import { prisma } from "../prisma";
+import { Usuario } from "../../shared/usuario";
 
 export class UsuarioRepository {
 
@@ -13,8 +14,11 @@ export class UsuarioRepository {
             where:{contrasenia:contrasenia}
         })
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
     
     async findUsuarioById(id:number){
         return await prisma.usuario.findUnique(
@@ -23,6 +27,7 @@ export class UsuarioRepository {
         })
     }
 
+<<<<<<< HEAD
     async registrarUsuario( data: {id_usuario: number,
                                 nombre: string,
                                 apellido: string,
@@ -33,4 +38,20 @@ export class UsuarioRepository {
     {
         return await prisma.usuario.create({data});
     }
+=======
+    async registrarUsuario(usuarioData: any) {
+  return await prisma.usuario.create({
+    data: {
+      nombre: usuarioData.nombre,
+      apellido: usuarioData.apellido,
+      email: usuarioData.email,
+      contrasenia: usuarioData.contrasenia,
+      direccion: usuarioData.direccion || null,
+    },
+  });
+
+  
+}
+
+>>>>>>> origin/master
 }

@@ -15,3 +15,15 @@ model usuario {
   contrasenia String  @db.VarChar(100)
   direccion   String? @db.VarChar(200)
 }
+
+model producto {
+  id            Int     @id @default(autoincrement())
+  nombre        String  @db.VarChar(100)
+  descripcion   String  @db.VarChar(255)
+  clasificacion String  @db.VarChar(100)
+  precio        Float
+  rutaImagen    String  @db.VarChar(255)
+  stock         Int?
+  color         String  @db.VarChar(255)
+  talle         Int
+}
