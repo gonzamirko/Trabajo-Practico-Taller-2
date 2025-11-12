@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import{CommonModule} from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +11,21 @@ import{CommonModule} from '@angular/common';
 })
 export class Header {
 
+  constructor(private router: Router) {}
+
   get nombreUsuario(): string | null{
-    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuario') || 'null');
     if(usuarioLogueado){
-      const usuario = JSON.parse(usuarioLogueado);
-      return usuario.nombre
+      return usuarioLogueado.nombre
     }
     return null;
   }
 
   cerrarSesion(): void {
-    localStorage.removeItem('usuarioLogueado');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    localStorage.removeItem('filtrosProductos');
+
+    this.router.navigate(['/login']);
   }
 }
