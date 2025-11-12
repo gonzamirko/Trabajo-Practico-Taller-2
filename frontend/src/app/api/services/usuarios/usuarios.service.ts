@@ -15,7 +15,7 @@ export interface Usuario {
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class UsuariosService {
   private apiUrl = `${environment.api_url}/usuario`;
 
   constructor(private http: HttpClient) {}
@@ -26,10 +26,6 @@ export class UsuarioService {
 
   login(body: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${environment.api_url}/login`, body);
-  }
-
-  register(usuario: Usuario){
-    return this.http.post<any>(`${environment.api_url}/register`,usuario);
   }
 
   
