@@ -13,13 +13,10 @@ export class Header {
 
   constructor(private router: Router) {}
 
-  get nombreUsuario(): string | null{
-    const usuarioLogueado = JSON.parse(localStorage.getItem('usuario') || 'null');
-    if(usuarioLogueado){
-      return usuarioLogueado.nombre
-    }
-    return null;
+  get usuario(): any {
+    return JSON.parse(localStorage.getItem('usuario') || 'null');
   }
+  
 
   cerrarSesion(): void {
     localStorage.removeItem('usuario');
