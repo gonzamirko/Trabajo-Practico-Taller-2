@@ -43,7 +43,7 @@ export class Login implements OnInit, OnDestroy {
       next: (res: any) => {
         this.loading = false;  
         // Guardar datos en localStorage si querés
-        localStorage.setItem('usuario', JSON.stringify(res.usuario));
+       // localStorage.setItem('usuario', JSON.stringify(res.usuario));
         alert('Inicio de sesión exitoso ✅'); 
         this.router.navigate(['/home']);
       },

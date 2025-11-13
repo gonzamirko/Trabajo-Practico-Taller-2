@@ -1,28 +1,45 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import{CommonModule} from '@angular/common';
 import { Router } from '@angular/router';
-
+import { UsuarioService } from "../../api/services/usuarios/usuarios.service";
 @Component({
   selector: 'app-header',
   imports: [RouterModule,CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit {
 
-  constructor(private router: Router) {}
+  user: any = null;
 
-  get usuario(): any {
-    return JSON.parse(localStorage.getItem('usuario') || 'null');
+  constructor(private router: Router, private usuarioService:UsuarioService) {}
+
+
+  ngOnInit(): void {
+    this.usuarioService.getProfile().subscribe({
+      next: (res:any)=>{
+        this.user =res.user;
+      },
+      error:(err)=>{
+       this.user = null;
+      }
+    });
   }
-  
+
+ // get usuario(): any {
+   // return JSON.parse(localStorage.getItem('usuario') || 'null');
 
   cerrarSesion(): void {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('token');
-    localStorage.removeItem('filtrosProductos');
-
-    this.router.navigate(['/login']);
+    //localStorage.removeItem('usuario');
+    //localStorage.removeItem('token');
+    //localStorage.removeItem('filtrosProductos');
+    this.usuarioService.logout().subscribe({
+      next: (res:any)=>{
+        this.user = null; 
+        this.router.navigate(['/login']);
+      }
+    });
+   
   }
 }

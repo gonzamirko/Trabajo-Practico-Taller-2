@@ -21,15 +21,23 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   register(usuario: Usuario): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, usuario);
+    return this.http.post(`${this.apiUrl}/register`, usuario, { withCredentials: true });
   }
 
   getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
+    return this.http.get<Usuario>(`${this.apiUrl}/${id}`, { withCredentials: true });
   }
 
     login(credentials: { email: string; contrasenia: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true });
+  }
+
+  getProfile() {
+    return this.http.get(`${this.apiUrl}/perfil`, { withCredentials: true });
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
   }
 
   

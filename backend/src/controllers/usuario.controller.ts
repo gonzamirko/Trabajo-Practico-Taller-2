@@ -51,6 +51,13 @@ export class UsuarioController {
       return;
     }
 
+    req.session.user = { 
+    email: usuario.email ,
+    id_usuario: usuario.id_usuario,
+    nombre: usuario.nombre,
+    apellido: usuario.apellido
+    }; 
+
     const { contrasenia: _, ...usuarioSinPassword } = usuario;
 
     res.status(200).json({
@@ -95,4 +102,21 @@ export class UsuarioController {
   }
 };
 
+  public getProfile = async (req: Request, res: Response) => {
+  if (req.session.user) {
+    return res.json({ user: req.session.user });
+  }
+  res.status(401).json({ error: 'No autenticado' });
+  
+  }
+
+  public logout = (req: Request, res: Response) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al cerrar sesión' });
+    }
+    res.clearCookie('connect.sid'); 
+    res.json({ message: 'Sesión cerrada exitosamente' });
+  });
+}
 }
