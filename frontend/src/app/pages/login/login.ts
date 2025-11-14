@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../api/services/usuarios/usuarios.service';
 import { Usuario } from '../../components/usuario/usuario';
+import { AuthService } from '../../api/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  providers: [UsuarioService],
+  providers: [],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -21,10 +22,17 @@ export class Login implements OnInit, OnDestroy {
   contrasenia: string = '';
   loading = false;
 
+  // constructor(
+  //   private usuarioService: UsuarioService,
+  //   private router: Router
+  // ) {}
+
   constructor(
     private usuarioService: UsuarioService,
+    private authService: AuthService,
     private router: Router
   ) {}
+  
 
   ngOnInit(): void {}
 
@@ -41,11 +49,11 @@ export class Login implements OnInit, OnDestroy {
 
     this.usuarioService.login(body).subscribe({
       next: (res: any) => {
-        this.loading = false;  
-        // Guardar datos en localStorage si querés
-        localStorage.setItem('usuario', JSON.stringify(res.usuario));
-        alert('Inicio de sesión exitoso ✅'); 
-        this.router.navigate(['/home']);
+        this.loading = true;  
+        
+      this.authService.setUser(res.user); 
+      this.router.navigate(['/home']);
+
       },
       error: (err) => {
         this.loading = false;

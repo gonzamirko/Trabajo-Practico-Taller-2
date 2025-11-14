@@ -1,31 +1,39 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import{CommonModule} from '@angular/common';
 import { Router } from '@angular/router';
-
+import { AuthService } from "../../api/services/auth.service";
 @Component({
   selector: 'app-header',
   imports: [RouterModule,CommonModule],
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrls: ['./header.css']
 })
-export class Header {
 
-  constructor(private router: Router) {}
+export class Header implements OnInit {
 
-  get nombreUsuario(): string | null{
-    const usuarioLogueado = JSON.parse(localStorage.getItem('usuario') || 'null');
-    if(usuarioLogueado){
-      return usuarioLogueado.nombre
-    }
-    return null;
+  user: any = null;
+
+  constructor(private router: Router,private auth:AuthService) {}
+
+
+  ngOnInit(): void {
+
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+      //console.log("HEADER user:", user);
+    });
+  
+    this.auth.loadSession();
   }
 
   cerrarSesion(): void {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('token');
-    localStorage.removeItem('filtrosProductos');
-
-    this.router.navigate(['/login']);
+    this.auth.logout().subscribe({
+      next: (res:any)=>{
+        this.auth.setUser(null);
+        this.router.navigate(['/login']);
+      }
+    });
+   
   }
 }

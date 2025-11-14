@@ -1,4 +1,4 @@
-import { CarritoRepository } from "../repository/carrito.repository";
+import { CarritoRepository } from "../repository/carrito.repository.js";
 
 export class CarritoService {
   
