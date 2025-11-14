@@ -7,8 +7,9 @@ import { UsuarioService } from "../../api/services/usuarios/usuarios.service";
   selector: 'app-header',
   imports: [RouterModule,CommonModule],
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrls: ['./header.css']
 })
+
 export class Header implements OnInit {
 
   user: any = null;
@@ -19,13 +20,16 @@ export class Header implements OnInit {
   ngOnInit(): void {
     this.usuarioService.getProfile().subscribe({
       next: (res:any)=>{
-        this.user =res.user;
+        console.log("Respuesta getProfile:", res);
+        this.user = res.user;
       },
       error:(err)=>{
-       this.user = null;
+        console.error("Error getProfile:", err);
+        this.user = null;
       }
     });
   }
+  
 
  // get usuario(): any {
    // return JSON.parse(localStorage.getItem('usuario') || 'null');
