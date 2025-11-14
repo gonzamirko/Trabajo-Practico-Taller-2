@@ -31,17 +31,5 @@ export class UsuarioService {
   login(credentials: { email: string; contrasenia: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true });
   }
-
-  getProfile() {
-    return this.http.get(`${this.apiUrl}/perfil`, { withCredentials: true });
-  }
-
-  logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
-  }
-
   
-
-
-
 }
