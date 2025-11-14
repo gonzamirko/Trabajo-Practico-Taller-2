@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 
 export class AuthService {
 
-  private userSubject = new BehaviorSubject<any>(null);
+  private userSubject = new BehaviorSubject<any | undefined>(undefined);
   user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}

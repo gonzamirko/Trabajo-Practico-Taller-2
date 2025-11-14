@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate,GuardResult,MaybeAsync,Router, RouterStateSnapshot } from "@angular/router";
 import { AuthService } from "./auth.service";
-import { take,map } from "rxjs/operators";
+import { take,map,filter } from "rxjs/operators";
 import { NotificationService } from "./notification.service";
 
 @Injectable({
@@ -14,6 +14,8 @@ export class AuthGuard implements CanActivate {
 
     canActivate() {
         return this.authService.user$.pipe(
+          filter(user => user !== undefined), 
+         
           take(1), 
           map(user => {
             if (user) return true; 
