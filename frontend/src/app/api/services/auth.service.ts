@@ -3,9 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
+//Servicio global
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   private userSubject = new BehaviorSubject<any>(null);
@@ -24,6 +26,10 @@ export class AuthService {
   setUser(user: any) {
     this.userSubject.next(user);
   }
+
+  currentUser() {
+    return this.userSubject.value;
+  }  
 
   logout() {
     return this.http.post(`${environment.api_url}/usuario/logout`, {}, { withCredentials: true });

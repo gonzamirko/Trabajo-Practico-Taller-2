@@ -30,7 +30,7 @@ export class Header implements OnInit {
   cerrarSesion(): void {
     this.auth.logout().subscribe({
       next: (res:any)=>{
-        this.user = null; 
+        this.auth.setUser(null);
         this.router.navigate(['/login']);
       }
     });
