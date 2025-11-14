@@ -6,8 +6,8 @@ import { IProducto } from '../lista-productos/i-producto';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ProductoServicio } from '../../api/services/productos/producto.service';
-import { Carrito } from '../carrito/carrito';
 import { CarritoService } from '../../api/services/carrito/carrito';
+import { AuthService } from '../../api/services/auth.service';
 
 
 @Component({
@@ -19,61 +19,53 @@ import { CarritoService } from '../../api/services/carrito/carrito';
 })
 
 export class ProductoDetalle implements OnInit {
+
   producto$: Observable<IProducto | undefined>;
+  user: any = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productoServicio: ProductoServicio,
-private carritoServicio: CarritoService
+    private carritoServicio: CarritoService,
+    private auth: AuthService
   ) {
 
     this.producto$ = new Observable<IProducto | undefined>();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {
+    this.auth.loadSession();
+    this.producto$ = this.route.paramMap.pipe(
+        switchMap(map => {
+            const id = Number(map.get('id'));
+            return this.productoServicio.verProductoPorId(id);
+        })
+    );
 
-    this.producto$ = this.route.paramMap.pipe(
-
-        switchMap(map => {
-            const id = Number(map.get('id'));
-         
-            return this.productoServicio.verProductoPorId(id);
-        })
-    );
-
-  }
-
-  get idUsuario(): number | null {
-  const usuarioLogueado = JSON.parse(localStorage.getItem('usuario') || 'null');
-  if (usuarioLogueado) {
-    return usuarioLogueado.id;
-  }
-  return null;
-}
-
-agregarAlCarrito(idProducto: number) {
-  const usuarioRaw = localStorage.getItem('usuario');
-  if (!usuarioRaw) {
-    alert('Tenés que iniciar sesión');
-    return;
-  }
-  const usuario = JSON.parse(usuarioRaw);
-  const idUsuario = usuario.id_usuario;
-
-  this.carritoServicio.agregar(idProducto, idUsuario).subscribe({
-    next: () => {
-      this.router.navigate(['/carrito']);
-    },
-    error: (err) => {
-      console.error("Error al agregar al carrito", err);
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+    });
+  }  
+  
+    agregarAlCarrito(idProducto: number) {
+    
+    if (!this.user) {
+      alert('Tenés que iniciar sesión');
+      return;
     }
-  });
-}
+    
+    const idUsuario = this.user.id_usuario;
 
-
-
-  comprarAhora() {
-   
-  }
+    this.carritoServicio.agregar(idProducto, idUsuario).subscribe({
+      next: (response) => {
+        setTimeout(() => {
+          this.router.navigate(['/carrito']);
+        }, 500);
+      },
+      error: (err) => {
+        alert('Error al agregar al carrito: ' + (err.error?.error || err.message));
+      }
+    });
+  }
 }

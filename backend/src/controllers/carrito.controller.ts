@@ -13,8 +13,8 @@ export class CarritoController {
       res.json(resultado);
 
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Error al agregar al carrito" });
+      console.error('Error al agregar al carrito:', error);
+      res.status(500).json({ error: "Error al agregar al carrito", details: String(error) });
     }
   }
 
