@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CarritoService } from '../../api/services/carrito/carrito';
+import { AuthService } from '../../api/services/auth.service';
 
 @Component({
   selector: 'app-carrito',
@@ -15,36 +16,50 @@ export class Carrito implements OnInit {
   productosCarrito: any[] = [];
   idUsuario!: number;
 
-  constructor(private carritoService: CarritoService) {}
+  constructor(
+    private carritoService: CarritoService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-  const raw = localStorage.getItem('usuario');
-  if (!raw) return;
+    console.log('[Carrito] ngOnInit iniciado');
+    
+    this.authService.user$.subscribe((user) => {
+      console.log('[Carrito] Usuario del AuthService:', user);
+      if (user && user.id_usuario) {
+        this.idUsuario = user.id_usuario;
+        // Cargamos el carrito cuando encontramos el usuario y de paso nos aseguramos que se muestren sus productos
+        this.cargarCarrito();
+      } else {
+        this.productosCarrito = [];
+      }
+    });
 
-  const usuario = JSON.parse(raw);
-  this.idUsuario = usuario.id_usuario; 
-
-  this.cargarCarrito();
-}
-
-
-  cargarCarrito() {
-    this.carritoService.obtenerCarrito(this.idUsuario).subscribe({
-      next: (resp) => {
-        this.productosCarrito = resp.map((item: any) => ({
-          idCarrito: item.id,
-          ...item.producto
-        }));
-      },
-      error: (err) => {
-        console.error('Error cargando carrito', err);
+    this.carritoService.getCarrito().subscribe((productos) => {
+      if (productos && productos.length > 0) {
+        this.productosCarrito = productos.map((item: any) => {
+          const producto = item.producto || item;
+          return {
+            idCarrito: item.id,
+            ...producto
+          };
+        });
+      } else {
+        this.productosCarrito = [];
       }
     });
   }
 
+  cargarCarrito() {
+    if (this.idUsuario) {
+      this.carritoService.cargarCarrito(this.idUsuario);
+    } else {
+      console.warn('[Carrito] No hay idUsuario disponible');
+    }
+  }
+
   eliminar(idCarrito: number) {
-    this.carritoService.eliminar(idCarrito).subscribe({
-      next: () => this.cargarCarrito(),
+    this.carritoService.eliminar(idCarrito, this.idUsuario).subscribe({
       error: (err) => console.error('Error eliminando', err)
     });
   }
