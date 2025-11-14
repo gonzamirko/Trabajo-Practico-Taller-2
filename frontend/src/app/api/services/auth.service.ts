@@ -18,7 +18,13 @@ export class AuthService {
   loadSession() {
     this.http.get(`${environment.api_url}/usuario/perfil`, { withCredentials: true })
       .subscribe({
-        next: (res: any) => this.userSubject.next(res.user),
+        next: (res: any) => {
+          if (res.logged) {
+            this.userSubject.next(res.user);
+          } else {
+            this.userSubject.next(null);
+          }
+        },
         error: () => this.userSubject.next(null)
       });
   }

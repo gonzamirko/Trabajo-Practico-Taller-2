@@ -8,16 +8,17 @@ import { RecoverPassword } from './pages/recover-password/recover-password';
 import { DetailUsuarioComponent } from './pages/detail-usuario/detail.usuario.component';
 import { Logout } from './pages/logout/logout';
 import { Carrito } from './components/carrito/carrito';
+import { AuthGuard } from "./api/services/auth.guard";
 
 export const routes: Routes = [
     {path:'' , component:WelcomePage},
-    {path:'home', component:Home},
+    {path:'home', component:Home, canActivate: [AuthGuard]},
     {path:'login', component:Login},
     {path:'register', component:Register},
-    {path: 'producto/:id', component: ProductoDetalle},
+    {path: 'producto/:id', component: ProductoDetalle, canActivate: [AuthGuard]},
     {path:'recoverPassword',component:RecoverPassword},
-    {path: 'usuario/:id', component: DetailUsuarioComponent},
-    {path: 'carrito',component: Carrito},
+    {path: 'usuario/:id', component: DetailUsuarioComponent, canActivate: [AuthGuard]},
+    {path: 'carrito',component: Carrito, canActivate: [AuthGuard]},
     {path:'**',redirectTo: ''},
     { path: 'logout', component: Logout }
 ];

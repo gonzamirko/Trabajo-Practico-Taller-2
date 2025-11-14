@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../api/services/usuarios/usuarios.service';
 import { Usuario } from '../../components/usuario/usuario';
 import { AuthService } from '../../api/services/auth.service';
+import { NotificationService } from "../../api/services/notification.service";
+
 
 @Component({
   selector: 'app-login',
@@ -21,20 +23,21 @@ export class Login implements OnInit, OnDestroy {
   email: string = '';
   contrasenia: string = '';
   loading = false;
-
-  // constructor(
-  //   private usuarioService: UsuarioService,
-  //   private router: Router
-  // ) {}
+  mensaje: string | null = null;
 
   constructor(
     private usuarioService: UsuarioService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
   
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.notificationService.currentMessage.subscribe(mensaje => {
+      this.mensaje = mensaje;
+    });
+  }
 
   ngOnDestroy(): void {}
 
@@ -51,9 +54,11 @@ export class Login implements OnInit, OnDestroy {
       next: (res: any) => {
         this.loading = true;  
         
+      this.authService.loadSession();  
       this.authService.setUser(res.user); 
+      this.notificationService.limpiarMensaje();
       this.router.navigate(['/home']);
-
+    
       },
       error: (err) => {
         this.loading = false;
