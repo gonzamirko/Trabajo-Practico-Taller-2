@@ -30,6 +30,7 @@ export class Header implements OnInit {
   cerrarSesion(): void {
     this.auth.logout().subscribe({
       next: (res:any)=>{
+        localStorage.removeItem('filtrosProductos');
         this.auth.setUser(null);
         this.router.navigate(['/login']);
       }

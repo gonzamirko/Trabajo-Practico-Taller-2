@@ -80,11 +80,6 @@ ngOnInit(): void {
 
 
 
-  cerrarSesion() {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('token');
-    localStorage.removeItem('filtrosProductos');
-    this.router.navigate(['/login']);
-  }
+ 
 
 }
