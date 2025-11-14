@@ -2,6 +2,9 @@
 import { Router } from 'express';
 import { UsuarioController } from '../controllers/usuario.controller.js';
 import { ProductoController } from '../controllers/producto.controller.js';
+import carritoRoutes from './carrito.routes.js';
+
+
 
 const router = Router();
 const usuarioController = new UsuarioController();
@@ -13,6 +16,8 @@ router.get('/api/usuario/:id', usuarioController.getUsuario);
 router.post('/api/usuario/login', usuarioController.login);
 router.get('/api/productos', productoController.getProductos);
 router.get('/api/productos/:id', productoController.getProductoById);
+router.use('/api/carrito', carritoRoutes);
+
 
 
 router.get('/health', (req, res) => {

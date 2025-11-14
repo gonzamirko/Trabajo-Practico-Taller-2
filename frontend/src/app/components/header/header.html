@@ -1,10 +1,10 @@
 <header>
     <a routerLink="/welcomePage">Logito</a>
     <nav>
-        <ng-container *ngIf="usuario; else noLogueado">
-            <span> Hola, {{usuario.nombre}}</span>
-            <a [routerLink]="['/usuario', usuario.id_usuario]">Mi Perfil</a>
-            <button (click)="cerrarSesion()">Cerrar Sesión</button>
+        <ng-container *ngIf="nombreUsuario; else noLogueado">
+            <span> Hola, {{nombreUsuario}}</span>
+            <a routerLink="/carrito">Carrito</a>
+            <a (click)="cerrarSesion()">Cerrar Sesión</a>
         </ng-container>
 
         <ng-template #noLogueado>

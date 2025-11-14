@@ -7,7 +7,7 @@
   <p class="precio">Precio: ${{ p.precio }}</p>
 
   <div class="acciones">
-    <button (click)="agregarAlCarrito()"> Agregar al carrito</button>
+    <button (click)="agregarAlCarrito(p.id)"> Agregar al carrito</button>
     <button class="comprar" (click)="comprarAhora()"> Comprar ahora</button>
   </div>
 </div>
