@@ -1,7 +1,7 @@
 import {type Request, type Response} from "express";
-import { UsuarioSevice } from "../services/usuario.service";
-import { UsuarioRepository } from "../repository/usuario.repository";
-import { Usuario } from "../../shared/usuario";
+import { UsuarioSevice } from "../services/usuario.service.js";
+import { UsuarioRepository } from "../repository/usuario.repository.js";
+import { Usuario } from "../../shared/usuario.js";
 
 const usuarioRepository = new UsuarioRepository();
 const usuarioService = new UsuarioSevice(usuarioRepository);
@@ -51,11 +51,26 @@ export class UsuarioController {
       return;
     }
 
+    req.session.user = { 
+    email: usuario.email ,
+    id_usuario: usuario.id_usuario,
+    nombre: usuario.nombre,
+    apellido: usuario.apellido
+    }; 
+
+    req.session.save((err: any)=> {
+      if (err) {
+        console.error('Error guardando sesión:', err);
+        return res.status(500).json({ error: 'No se pudo guardar la sesión' });
+      }
+    });
+    
     const { contrasenia: _, ...usuarioSinPassword } = usuario;
 
     res.status(200).json({
       message: 'Inicio de sesión exitoso',
-      usuario: usuarioSinPassword
+      usuario: usuarioSinPassword,
+      user: req.session.user
     });
   } catch (error) {
     console.error('Error en login:', error);
@@ -95,4 +110,23 @@ export class UsuarioController {
   }
 };
 
+  public getProfile = async (req: Request, res: Response)  => {
+    if (!req.session.user) {
+        return res.status(401).json({ logged: false });
+    }
+    res.json({ logged: true, user: req.session.user });
+};
+
+
+  public logout = (req: Request, res: Response) => {
+  req.session.destroy((err: any) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al cerrar sesión' });
+    }
+    res.clearCookie('connect.sid'); 
+    res.json({ message: 'Sesión cerrada exitosamente' });
+  });
+  
+
+}
 }

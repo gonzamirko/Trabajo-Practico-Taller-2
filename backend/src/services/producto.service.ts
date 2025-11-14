@@ -1,5 +1,5 @@
-import {ProductoRepository} from "../repository/producto.repository";
-import {Producto} from "../../shared/producto";
+import {ProductoRepository} from "../repository/producto.repository.js";
+import {Producto} from "../../shared/producto.js";
 
 
 export class ProductoService {
