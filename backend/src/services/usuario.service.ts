@@ -1,5 +1,5 @@
-import { Usuario } from "../../shared/usuario";
-import { UsuarioRepository} from "../repository/usuario.repository";
+import { Usuario } from "../../shared/usuario.js";
+import { UsuarioRepository} from "../repository/usuario.repository.js";
 
 export class UsuarioSevice {
 

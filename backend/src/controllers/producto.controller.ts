@@ -1,7 +1,7 @@
 
-import {ProductoService} from "../services/producto.service";
+import {ProductoService} from "../services/producto.service.js";
 import {Request,Response} from "express";
-import {ProductoRepository} from "../repository/producto.repository";
+import {ProductoRepository} from "../repository/producto.repository.js";
 
 const productoRepository = new ProductoRepository();
 const productoService = new ProductoService(productoRepository);
