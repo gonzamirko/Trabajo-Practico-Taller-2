@@ -1,5 +1,5 @@
 <header>
-    <a routerLink="/welcomePage">Logito</a>
+    <a [routerLink]="user ? '/home' : '/welcomePage'">Logito</a>
     <nav>
         <ng-container *ngIf="user; else noLogueado">
             <span> Hola, {{user.nombre}}</span>
@@ -12,6 +12,6 @@
             <a routerLink="/login">Iniciar sesión</a>
             <a routerLink="/register">Registrarse</a>
         </ng-template>
-            
+
     </nav>
 </header>
