@@ -18,6 +18,21 @@ form .opciones a:hover{
     cursor: pointer;
 }
 
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.opciones .link {
+  display: block;
+  width: 100%;
+}
+.opciones .link button {
+  width: 100%;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 1rem;
@@ -27,10 +42,3 @@ form .opciones a:hover{
     padding: 1.5rem;
   }
 }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-

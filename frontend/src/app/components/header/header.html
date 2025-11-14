@@ -3,7 +3,7 @@
     <nav>
         <ng-container *ngIf="nombreUsuario; else noLogueado">
             <span> Hola, {{nombreUsuario}}</span>
-            <button (click)="cerrarSesion()">Cerrar Sesión</button>
+            <a (click)="cerrarSesion()">Cerrar Sesión</a>
         </ng-container>
 
         <ng-template #noLogueado>
