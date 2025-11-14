@@ -1,5 +1,5 @@
-import { prisma } from "../prisma";
-import { Producto } from "../../shared/producto";
+import { prisma } from "../prisma.js";
+import { Producto } from "../../shared/producto.js";
 
 
 export class ProductoRepository {

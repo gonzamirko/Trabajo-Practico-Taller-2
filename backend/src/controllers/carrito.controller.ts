@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CarritoService } from "../services/carrito.service";
+import { CarritoService } from "../services/carrito.service.js";
 
 const carritoService = new CarritoService();
 
