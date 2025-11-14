@@ -28,17 +28,27 @@ export class ListaProductos implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-   
-    this.route.queryParams.subscribe(params => {
-      this.nombre = params['nombre'] || "";
-      this.clasificacion = params['clasificacion'] || "";
-      this.precioMin = params['precioMin'] ? Number(params['precioMin']) : undefined;
-      this.precioMax = params['precioMax'] ? Number(params['precioMax']) : undefined;
+ngOnInit(): void {
 
-      this.cargarProductos(); 
-    });
+  const filtrosGuardados = localStorage.getItem("filtrosProductos");
+  if (filtrosGuardados) {
+    const f = JSON.parse(filtrosGuardados);
+    this.nombre = f.nombre || "";
+    this.clasificacion = f.clasificacion || "";
+    this.precioMin = f.precioMin || undefined;
+    this.precioMax = f.precioMax || undefined;
   }
+
+  this.route.queryParams.subscribe(params => {
+    this.nombre = params['nombre'] ?? this.nombre;
+    this.clasificacion = params['clasificacion'] ?? this.clasificacion;
+    this.precioMin = params['precioMin'] ? Number(params['precioMin']) : this.precioMin;
+    this.precioMax = params['precioMax'] ? Number(params['precioMax']) : this.precioMax;
+
+    this.cargarProductos();
+  });
+}
+
 
   cargarProductos() {
     const filtros: any = {};
@@ -52,18 +62,22 @@ export class ListaProductos implements OnInit {
   }
 
   filtrar() {
-  
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        nombre: this.nombre || null,
-        clasificacion: this.clasificacion || null,
-        precioMin: this.precioMin || null,
-        precioMax: this.precioMax || null
-      },
-      queryParamsHandling: 'merge'
-    });
-  }
+  const filtros = {
+    nombre: this.nombre,
+    clasificacion: this.clasificacion,
+    precioMin: this.precioMin,
+    precioMax: this.precioMax
+  };
+
+  localStorage.setItem("filtrosProductos", JSON.stringify(filtros));
+
+  this.router.navigate([], {
+    relativeTo: this.route,
+    queryParams: filtros,
+    queryParamsHandling: 'merge'
+  });
+}
+
 
 
   cerrarSesion() {
