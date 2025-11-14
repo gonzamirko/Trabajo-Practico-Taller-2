@@ -41,7 +41,7 @@ export class Login implements OnInit, OnDestroy {
 
     this.usuarioService.login(body).subscribe({
       next: (res: any) => {
-        this.loading = false;  
+        this.loading = true;  
         // Guardar datos en localStorage si querés
        // localStorage.setItem('usuario', JSON.stringify(res.usuario));
         alert('Inicio de sesión exitoso ✅'); 

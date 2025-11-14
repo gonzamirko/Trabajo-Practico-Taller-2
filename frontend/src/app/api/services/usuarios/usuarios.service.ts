@@ -28,7 +28,7 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`, { withCredentials: true });
   }
 
-    login(credentials: { email: string; contrasenia: string }): Observable<any> {
+  login(credentials: { email: string; contrasenia: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true });
   }
 

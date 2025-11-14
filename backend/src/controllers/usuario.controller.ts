@@ -1,7 +1,7 @@
 import {type Request, type Response} from "express";
-import { UsuarioSevice } from "../services/usuario.service";
-import { UsuarioRepository } from "../repository/usuario.repository";
-import { Usuario } from "../../shared/usuario";
+import { UsuarioSevice } from "../services/usuario.service.js";
+import { UsuarioRepository } from "../repository/usuario.repository.js";
+import { Usuario } from "../../shared/usuario.js";
 
 const usuarioRepository = new UsuarioRepository();
 const usuarioService = new UsuarioSevice(usuarioRepository);
@@ -107,11 +107,10 @@ export class UsuarioController {
     return res.json({ user: req.session.user });
   }
   res.status(401).json({ error: 'No autenticado' });
-  
   }
 
   public logout = (req: Request, res: Response) => {
-  req.session.destroy((err) => {
+  req.session.destroy((err: any) => {
     if (err) {
       return res.status(500).json({ error: 'Error al cerrar sesión' });
     }

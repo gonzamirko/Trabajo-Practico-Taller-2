@@ -3,7 +3,6 @@ import { json } from "stream/consumers";
 import cors from 'cors';
 import { AppRoutes } from "./routers/routes.js";
 import session from 'express-session';
-// PUNTO DE ENTRADA
 
 const app = express();
 app.use(express.json());
@@ -20,11 +19,13 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    httpOnly: true, 
-    secure: false, 
-    maxAge: 1000 * 60 * 60 
+    httpOnly: true,
+    secure: false,
+    sameSite: 'none',
+    maxAge: 1000 * 60 * 60
   }
 }));
+
 
 app.use(AppRoutes.routes);
 
