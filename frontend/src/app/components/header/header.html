@@ -3,6 +3,7 @@
     <nav>
         <ng-container *ngIf="nombreUsuario; else noLogueado">
             <span> Hola, {{nombreUsuario}}</span>
+            <a routerLink="/carrito">Carrito</a>
             <a (click)="cerrarSesion()">Cerrar Sesión</a>
         </ng-container>
 

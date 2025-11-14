@@ -1,0 +1,120 @@
+.contenedor-principal {
+  display: flex;
+  margin: 2em;
+  height: 90vh;      
+  gap: 1em;          
+}
+
+.contenedor-productos {
+  flex: 1;                 
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  padding: 1em;
+  border: 1px solid #ddd;
+  overflow-y: auto;         
+  min-height: 0;           
+  scroll-behavior: smooth;
+  scrollbar-width: thin;  
+}
+
+.contenedor-productos::-webkit-scrollbar {
+  width: 4px;
+}
+
+.contenedor-productos::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.contenedor-productos::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.contenedor-productos .mas{
+  align-self: center;
+}
+
+.contenedor-informacion {
+  width: 30%;
+  padding: 1em;
+  border: 1px solid #ddd;
+}
+
+.tarjeta-producto {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s;
+  margin-bottom:0.5em ;
+}
+
+.tarjeta-producto:hover {
+  transform: scale(1.0001);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-producto {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  flex-shrink: 0;           
+}
+
+.contenido-producto {
+  flex: 1;
+  padding: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contenido-producto a,
+.precio {
+  font-size: 1.1em;
+}
+
+.contenido-producto a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.contenido-producto a:hover,i{
+    cursor: pointer;
+}
+
+.carrito-vacio {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #777;
+  padding: 0;
+  background-color: #fdfdfd;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  min-height: 200px;
+}
+
+.carrito-vacio i {
+  font-size: 2em;
+  color: #bbb;
+  margin-bottom: 0.5em;
+}
+
+.boton-volver {
+  color: #4d31aa;
+}
+
+.boton-volver:hover {
+  color: #22154b;
+}
