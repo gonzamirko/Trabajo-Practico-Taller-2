@@ -57,7 +57,8 @@ export class UsuarioController {
             email: usuario.email ,
             id_usuario: usuario.id_usuario,
             nombre: usuario.nombre,
-            apellido: usuario.apellido
+            apellido: usuario.apellido,
+            direccion: usuario.direccion
         }; 
 
         req.session.save((err: any)=> {

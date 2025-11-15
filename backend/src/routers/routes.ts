@@ -12,7 +12,6 @@ const productoController = new ProductoController();
 
 
 router.post('/api/usuario/register', usuarioController.register);
-//router.get('/api/usuario/:id', usuarioController.getUsuario);
 router.post('/api/usuario/login', usuarioController.login);
 router.get('/api/productos', productoController.getProductos);
 router.get('/api/productos/:id', productoController.getProductoById);
