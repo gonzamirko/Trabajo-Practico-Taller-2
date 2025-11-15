@@ -1,12 +1,13 @@
 <header>
-    <a [routerLink]="user ? '/home' : '/welcomePage'">Logito</a>
+    <a [routerLink]="user ? '/home' : '/welcomePage'"><img src="public/img/adidas_ultraboost.jpg" alt="Perfil" alt="Logo" style="height:60px; margin: 0px; " />
+</a>
     <nav>
         <ng-container *ngIf="user; else noLogueado">
             <span> Hola, {{user.nombre}}</span>
             <a [routerLink]="['/usuario', user.id_usuario]">Mi Perfil</a>
             <a routerLink="/carrito">      <i class="fa-solid fa-cart-shopping"></i>
 </a>
-            <button (click)="cerrarSesion()">Cerrar Sesión</button>
+            <!-- <button (click)="cerrarSesion()">Cerrar Sesión</button> -->
         </ng-container>
 
         <ng-template #noLogueado>

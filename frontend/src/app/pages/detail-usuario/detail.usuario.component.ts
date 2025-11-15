@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from "../../api/services/auth.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-usuario',
@@ -14,7 +15,7 @@ export class DetailUsuarioComponent implements OnInit, OnDestroy {
 
   usuario: any = null;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
    
@@ -30,4 +31,12 @@ export class DetailUsuarioComponent implements OnInit, OnDestroy {
     
   }
 
-}
+  cerrarSesion(): void {
+    this.auth.logout().subscribe({
+      next: (res:any)=>{
+        this.auth.setUser(null);
+        this.router.navigate(['/login']);
+      }
+    });
+
+}}

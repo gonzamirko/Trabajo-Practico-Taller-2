@@ -9,6 +9,11 @@
       <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
     </div>
 
+    <div style="display: grid; grid-auto-flow: column; gap: 20px;justify-content: end; align-items: center;   ">
+    <button >Editar</button>
+    <button (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
     <ng-template #cargando>
       <p>Cargando usuario...</p>  
     </ng-template>
