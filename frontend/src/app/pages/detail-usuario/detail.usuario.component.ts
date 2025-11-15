@@ -31,12 +31,4 @@ export class DetailUsuarioComponent implements OnInit, OnDestroy {
     
   }
 
-  cerrarSesion(): void {
-    this.auth.logout().subscribe({
-      next: (res:any)=>{
-        this.auth.setUser(null);
-        this.router.navigate(['/login']);
-      }
-    });
-
-}}
+  }
