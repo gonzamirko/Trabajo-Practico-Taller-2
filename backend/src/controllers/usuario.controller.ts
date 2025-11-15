@@ -86,6 +86,13 @@ public register = async (req: Request, res: Response): Promise<void> => {
         const userData = req.body;
         const { nombre, apellido, email, contrasenia, direccion } = userData;
      
+
+        if (!nombre || !apellido || !email || !contrasenia || !direccion) {
+            res.status(400).json({ 
+                error: 'Todos los campos son obligatorios.' 
+            });
+            return;
+        }
   
         if (!contrasenia || contrasenia.length < 8) {
             res.status(400).json({ 
