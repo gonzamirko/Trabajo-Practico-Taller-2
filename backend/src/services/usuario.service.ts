@@ -15,7 +15,7 @@ export class UsuarioSevice {
     async registrarUsuario(data: { [key: string]: any }) {
   const { nombre, apellido, email, contrasenia, direccion } = data;
 
-  // 🔍 Validaciones simples
+
   if (!nombre || !apellido || !email || !contrasenia) {
     throw new Error("Todos los campos son obligatorios.");
   }
@@ -24,7 +24,7 @@ export class UsuarioSevice {
     throw new Error("El Email debe contener '@' y '.com'.");
   }
 
-  // 🔎 Verificamos si ya existe el usuario por email
+
   const usuarioExistente = await this.usuarioRepository.findUsuarioByEmail(email);
   if (usuarioExistente) {
     throw new Error("El email ya está registrado.");

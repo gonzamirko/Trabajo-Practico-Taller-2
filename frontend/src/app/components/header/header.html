@@ -4,7 +4,8 @@
         <ng-container *ngIf="user; else noLogueado">
             <span> Hola, {{user.nombre}}</span>
             <a [routerLink]="['/usuario', user.id_usuario]">Mi Perfil</a>
-            <a routerLink="/carrito">Carrito</a>
+            <a routerLink="/carrito">      <i class="fa-solid fa-cart-shopping"></i>
+</a>
             <button (click)="cerrarSesion()">Cerrar Sesión</button>
         </ng-container>
 
