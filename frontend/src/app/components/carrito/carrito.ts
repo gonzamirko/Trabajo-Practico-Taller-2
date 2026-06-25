@@ -9,41 +9,32 @@ import { AuthService } from '../../api/services/auth.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './carrito.html',
-  styleUrls: ['./carrito.css']
+  styleUrls: ['./carrito.css'],
 })
 export class Carrito implements OnInit {
-
   productosCarrito: any[] = [];
   idUsuario!: number;
 
   constructor(
     private carritoService: CarritoService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
     console.log('[Carrito] ngOnInit iniciado');
-    
+
+    this.carritoService.carrito$.subscribe((productos) => {
+      this.productosCarrito = productos.map((item) => ({
+        idCarrito: item.id,
+        ...item.producto,
+      }));
+    });
+
     this.authService.user$.subscribe((user) => {
       console.log('[Carrito] Usuario del AuthService:', user);
       if (user && user.id_usuario) {
         this.idUsuario = user.id_usuario;
-        // Cargamos el carrito cuando encontramos el usuario y de paso nos aseguramos que se muestren sus productos
         this.cargarCarrito();
-      } else {
-        this.productosCarrito = [];
-      }
-    });
-
-    this.carritoService.getCarrito().subscribe((productos) => {
-      if (productos && productos.length > 0) {
-        this.productosCarrito = productos.map((item: any) => {
-          const producto = item.producto || item;
-          return {
-            idCarrito: item.id,
-            ...producto
-          };
-        });
       } else {
         this.productosCarrito = [];
       }
@@ -52,20 +43,18 @@ export class Carrito implements OnInit {
 
   cargarCarrito() {
     if (this.idUsuario) {
-      this.carritoService.cargarCarrito(this.idUsuario);
+      this.carritoService.cargarCarrito(this.idUsuario).subscribe();
     } else {
       console.warn('[Carrito] No hay idUsuario disponible');
     }
   }
-
   eliminar(idCarrito: number) {
     this.carritoService.eliminar(idCarrito, this.idUsuario).subscribe({
-      error: (err) => console.error('Error eliminando', err)
+      error: (err) => console.error('Error eliminando', err),
     });
   }
 
   trackById(_index: number, item: any) {
     return item.idCarrito ?? item.id;
   }
-
 }

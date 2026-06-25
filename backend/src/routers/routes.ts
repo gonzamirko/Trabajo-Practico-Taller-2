@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import { UsuarioController } from '../controllers/usuario.controller.js';
 import { ProductoController } from '../controllers/producto.controller.js';
